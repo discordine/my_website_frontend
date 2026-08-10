@@ -157,7 +157,7 @@ h2 {
   color: #111827;
 }
 
-/* Markdownのコードブロック */
+/* Markdownのコードブロック共通 */
 .post-body :deep(pre) {
   background: #f8f9fa;
   color: #111827;
@@ -166,18 +166,34 @@ h2 {
   border-radius: 0.75rem;
   border: 1px solid #334155;
   overflow-x: auto;
-  font-family: 'ＭＳ Ｐゴシック', 'モナーフォント', 'IPAモナーフォント', 'IPA モナ', 'M+IPAモナ', 'Mona', 'mona-gothic-jisx0208.1990-0', 'sans-serif';
+
+  /* 通常のコードブロック */
+  font-family: system-ui, sans-serif;
   font-size: 0.9rem;
   line-height: 1.6;
   white-space: pre;
 }
 
-.post-body :deep(pre code) {
-  background: transparent;
-  color: inherit;
-  font-family: inherit;
-  font-size: inherit;
-  line-height: inherit;
+/* 通常のコードブロック */
+.post-body :deep(pre:not(.aa)),
+.post-body :deep(pre:not(.aa) code) {
+  font-family: system-ui, sans-serif;
+}
+
+/* AAブロックだけMS Pゴシック系 */
+.post-body :deep(pre.aa),
+.post-body :deep(pre.aa code) {
+  font-family:
+    'ＭＳ Ｐゴシック',
+    'モナーフォント',
+    'IPAモナーフォント',
+    'IPA モナ',
+    'M+IPAモナ',
+    'Mona',
+    'mona-gothic-jisx0208.1990-0',
+    sans-serif;
+
+  line-height: 1.0;
 }
 
 /* インラインコード */
@@ -186,7 +202,7 @@ h2 {
   color: #0f172a;
   padding: 0.15rem 0.35rem;
   border-radius: 0.35rem;
-  font-family: 'ＭＳ Ｐゴシック', 'モナーフォント', 'IPAモナーフォント', 'IPA モナ', 'M+IPAモナ', 'Mona', 'mona-gothic-jisx0208.1990-0', 'sans-serif';
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
   font-size: 0.9rem;
 }
 
