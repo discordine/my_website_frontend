@@ -103,6 +103,7 @@ const html = computed(() => {
     <div>
         <input v-model="name" placeholder="名前" />
         <textarea v-model="body" placeholder="本文" />
+        <small>Markdown記法をサポートしています。また、[aa][/aa]で囲った範囲はアスキーアートとして解釈されます。</small>
     </div>
     <button @click="submit">投稿</button>
 
