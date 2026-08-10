@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { renderMarkdown } from '../../utils/markdown'
+
 const route = useRoute()
 const id = route.params.id
 
@@ -54,6 +56,13 @@ function isUrl(text) {
   return urlRegex.test(text)
 }
 
+const props = defineProps<{
+    content: string
+}>()
+
+const html = computed(() => {
+    return renderMarkdown(props.content)
+})
 </script>
 
 <template>
@@ -78,19 +87,10 @@ function isUrl(text) {
   >
     <small>{{ post.name ?? '名無しさん' }}: </small>
 
-    <p>
-      <template v-for="(part, index) in splitBody(post.body)" :key="index">
-        <a
-          v-if="isUrl(part)"
-          :href="part"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          {{ part }}
-        </a>
-        <template v-else>{{ part }}</template>
-      </template>
-    </p>
+    <div
+      class="post-body markdown"
+      v-html="renderMarkdown(post.body)"
+    ></div>
 
     <small>{{ new Date(post.created_at).toLocaleString('ja-JP') }}</small>
   </div>
@@ -150,11 +150,44 @@ h2 {
 }
 
 /* 投稿本文 */
-.post p {
-  margin: 6px 0;
+.post-body {
+  font-family: system-ui, sans-serif;
   font-size: 0.95rem;
   line-height: 1.5;
   color: #111827;
+}
+
+/* Markdownのコードブロック */
+.post-body :deep(pre) {
+  background: #f8f9fa;
+  color: #111827;
+  padding: 1rem;
+  margin: 1rem 0;
+  border-radius: 0.75rem;
+  border: 1px solid #334155;
+  overflow-x: auto;
+  font-family: 'ＭＳ Ｐゴシック', 'モナーフォント', 'IPAモナーフォント', 'IPA モナ', 'M+IPAモナ', 'Mona', 'mona-gothic-jisx0208.1990-0', 'sans-serif';
+  font-size: 0.9rem;
+  line-height: 1.6;
+  white-space: pre;
+}
+
+.post-body :deep(pre code) {
+  background: transparent;
+  color: inherit;
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+}
+
+/* インラインコード */
+.post-body :deep(code) {
+  background: #e2e8f0;
+  color: #0f172a;
+  padding: 0.15rem 0.35rem;
+  border-radius: 0.35rem;
+  font-family: 'ＭＳ Ｐゴシック', 'モナーフォント', 'IPAモナーフォント', 'IPA モナ', 'M+IPAモナ', 'Mona', 'mona-gothic-jisx0208.1990-0', 'sans-serif';
+  font-size: 0.9rem;
 }
 
 /* 名前・日時 */
@@ -222,12 +255,5 @@ button {
 button:hover {
   background: #1d4ed8;
 }
-
-.post p {
-  margin: 6px 0;
-  font-size: 0.95rem;
-  line-height: 1.5;
-  color: #111827;
-  white-space: pre-wrap;
-}
 </style>
+
