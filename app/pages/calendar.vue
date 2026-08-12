@@ -29,7 +29,7 @@ const calendarOptions = computed(() => ({
   initialView: 'dayGridMonth',
   events: events.value,
   eventClick: handleEventClick,
-  eventDisplay: 'block',
+  eventDisplay: 'list-item',
   height: 'auto',
 }))
 
